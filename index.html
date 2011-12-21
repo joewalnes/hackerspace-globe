@@ -31,9 +31,10 @@
         $.getJSON('http://chasmcity.sonologic.nl/spacestatusdirectory.php', function(urls) {
           for (var name in urls) {
             $.getJSON(urls[name], function(data) {
+              // TODO: Gracefully handle GET errors
               if (data.lat !== undefined && data.lon !== undefined) {
                 console.log('Space:', data.space, 'open:', data.open, 'lat/lon:', data.lat, data.lon);
-                globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.4, data.open], {format: 'legend'});
+                globe.addData([parseFloat(data.lat), parseFloat(data.lon), 0.2, data.open], {format: 'legend'});
                 globe.createPoints();    
               } else {
                 console.log('Space:', data.space, '[No lat/lon values]'); // TODO: Geocode address
@@ -60,21 +61,26 @@
         height: 100%;
       }
       a {
-        color: #aaa;
+        color: #aa6;
         text-decoration: none;
       }
       a:hover {
         text-decoration: underline;
       }
-      #title {
+      #blurbLeft, #blurbRight {
         position: absolute;
         top: 20px;
-        width: 270px;
+        width: 250px;
+        padding: 0;
+      }
+      #blurbLeft {
         left: 20px;
-        background-color: rgba(0,0,0,0.2);
-        border-radius: 3px;
-        font: 20px Georgia;
-        padding: 10px;
+      }
+      #blurbRight {
+        right: 20px;
+      }
+      #blurbLeft h2 {
+        margin-top: 0;
       }
     </style>
   </head>
@@ -82,12 +88,16 @@
 
     <div id="globeContainer"></div>
     
-    <div id="title">
-      HackerSpace Statuses
+    <div id="blurbLeft">
+      <h2>HackerSpaces</h2>
+      <p><span style="color:#00ff00; font-weight:bold">Green is open</span>, <span style="color:#ff0000; font-weight:bold">Red is closed.</p>
+      <p>Spin globe by dragging. Zoom with scrolly wheel.</p>
     </div>
-    
-    <div id="detail">
-      Hacked up with <a href="http://hackerspaces.nl/spaceapi/">HackerSpace Status API</a> and <a href="http://code.google.com/p/webgl-globe/">The WebGL Globe</a>.
+
+    <div id="blurbRight">
+      <p>Hacked up with <a href="http://hackerspaces.nl/spaceapi/" target="_blank">The HackerSpace Status API</a> and <a href="http://code.google.com/p/webgl-globe/" target="_blank">The WebGL Globe</a>.</p>
+      <p><a href="https://github.com/joewalnes/hackerspace-globe" target="_blank">Code on GitHub</a>.</p>
+      <p>By <a href="http://twitter.com/joewalnes" target="_blank">@joewalnes</a> (with inspiration from <a href="http://twitter.com/toba" target="_blank">@toba</a> and <a href="http://twitter.com/osi" target="_blank">@osi</a>).</p>
     </div>
 
   </body>
