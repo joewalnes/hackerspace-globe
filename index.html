@@ -28,7 +28,7 @@
         new TWEEN.Tween(globe).to({time: 0},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
         globe.animate();
 
-        $.getJSON('http://chasmcity.sonologic.nl/spacestatusdirectory.php', function(urls) {
+        $.getJSON('http://openspace.slopjong.de/directory.json', function(urls) {
           for (var name in urls) {
             $.getJSON(urls[name], function(data) {
               // TODO: Gracefully handle GET errors
